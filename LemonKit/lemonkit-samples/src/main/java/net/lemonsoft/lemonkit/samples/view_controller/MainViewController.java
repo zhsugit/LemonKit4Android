@@ -23,40 +23,12 @@ public class MainViewController extends UIViewController {
     @Override
     public void viewDidLoad() {
         super.viewDidLoad();
-//        UILabel label = new UILabel(CGRect.make(50, 150, 200, 100));
-//        label.setText("Hello! LemonKit World.");
-//        label.setBackgroundColor(UIColor.greenColor());
-//        this.view.addSubView(label);
-//        label.setClipsToBounds(true);
-//        label.layer.setBorderWidth(1);
-//        label.layer.setCornerRadius(80);
-//        label.layer.setBorderColor(UIColor.redColor().cgColor());
-//        this.view.setBackgroundColor(UIColor.colorWithRedGreenBlueAlpha(0.7f, 0.6f, 0.5f, 0.9f));
-//
-//        LemonBubble.showRight(this, "hello", 2000);
-
-//        this.view.setBackgroundColor(UIColor.blueColor());
-//
-//        UIScrollView scrollView = new UIScrollView(LKSizeTool.getDefaultSizeTool().screenFrame());
-//        scrollView.setContentSize(CGSize.make(0, 1000));
-//        this.view.addSubView(scrollView);
-//        UIView view = new UIView(CGRect.make(0, 0, 100, 100));
-//        view.setBackgroundColor(UIColor.hotpinkColor());
-//        scrollView.addSubView(view);
-//        scrollView.setDelegate(new UIScrollViewDelegateAdapter() {
-//            @Override
-//            public void scrollViewDidScroll(UIScrollView scrollView) {
-//                super.scrollViewDidScroll(scrollView);
-//                System.out.println(scrollView.getContentOffset().y);
-//            }
-//        });
 
         LKTableView tableView = new LKTableView(this);
 
         this.view.addView(tableView);
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1500);
         tableView.setLayoutParams(layoutParams);
-//        tableView.setBackgroundColor(Color.argb(255, 238, 238, 238));
 
         tableView.delegate = new LKUITableViewDelegateAdapter() {
             @Override
@@ -132,7 +104,7 @@ public class MainViewController extends UIViewController {
             @Override
             public View viewForFooterInSection(final LKTableView tableView, Integer section) {
                 String identifier = String.format("%d_%d", 0, section);
-                View myView = tableView.dequeueReusableHeaderWithIdentifier(identifier);
+                View myView = tableView.dequeueReusableFooterWithIdentifier(identifier);
                 if (myView == null) {
                     Button btn = new Button(MainViewController.this);
                     btn.setText("11111");
@@ -156,6 +128,8 @@ public class MainViewController extends UIViewController {
 
     }
 
+    public void getDataSouce() {
 
+    }
 }
 

@@ -602,6 +602,27 @@ public class LKTableView extends LKScrollView {
         return null;
     }
 
+
+    /**
+     * 根据复用标识从复用池中取View header
+     *
+     * @param identifier 复用标识字符串
+     * @return 复用池中存储的对应View header
+     */
+    public View dequeueReusableFooterWithIdentifier(String identifier) {
+
+        if (reuseFooterViewPool.containsKey(identifier) &&
+                reuseFooterViewPool.get(identifier) != null &&
+                reuseFooterViewPool.get(identifier).size() > 0) {
+            View view = reuseFooterViewPool.get(identifier).get(0);
+            reuseFooterViewPool.remove(identifier).remove(0);// 从复用池中移除
+            return view;
+        }
+        System.out.println(" ERRRR: " + identifier);
+        System.out.println(" ---> time to : " + System.currentTimeMillis());
+        return null;
+    }
+
     //// 复用机制方法 - 结束
 
 
