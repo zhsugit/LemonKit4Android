@@ -77,7 +77,7 @@ public class LKScrollView extends FrameLayout {
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent event) {
+    public boolean dispatchTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN: {
                 isTouching = true;
@@ -145,7 +145,8 @@ public class LKScrollView extends FrameLayout {
                 }
                 break;
         }
-        return true;
+
+        return super.dispatchTouchEvent(event);
     }
 
     /**
@@ -343,7 +344,7 @@ public class LKScrollView extends FrameLayout {
         this.contentSize = contentSize;
         this.contentView.setLayoutParams(
                 new LayoutParams(
-                        (int) Math.max(contentSize.width, getLayoutParams().width),
+                        (int) Math.max(contentSize.width, getWidth()),
                         (int) Math.max(contentSize.height, getLayoutParams().height)
                 )
         );
