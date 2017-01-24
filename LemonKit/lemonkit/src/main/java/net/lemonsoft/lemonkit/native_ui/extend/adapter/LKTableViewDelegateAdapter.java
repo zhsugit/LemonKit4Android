@@ -1,9 +1,9 @@
 package net.lemonsoft.lemonkit.native_ui.extend.adapter;
 
+import net.lemonsoft.lemonkit.native_ui.extend.delegate.LKTableViewDelegate;
 import net.lemonsoft.lemonkit.native_ui.extend.view.LKTableView;
 import net.lemonsoft.lemonkit.native_ui.model.LKIndexPath;
-import net.lemonsoft.lemonkit.native_ui.model.LKUITableViewRowAction;
-import net.lemonsoft.lemonkit.ui_kit.delegate.LKUITableView.LKUITableViewDelegate;
+import net.lemonsoft.lemonkit.native_ui.model.LKTableViewRowAction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.List;
  * LKUITableView的代理适配器
  * Created by lemonsoft on 16-10-12.
  */
-public abstract class LKUITableViewDelegateAdapter implements LKUITableViewDelegate {
+public abstract class LKTableViewDelegateAdapter implements LKTableViewDelegate {
 
     @Override
     public Integer heightForRowAtIndexPath(LKTableView tableView, LKIndexPath indexPath) {
@@ -34,7 +34,7 @@ public abstract class LKUITableViewDelegateAdapter implements LKUITableViewDeleg
     }
 
     @Override
-    public List<LKUITableViewRowAction> editActionsForRowAtIndexPath(LKTableView tableView, LKIndexPath indexPath) {
+    public List<LKTableViewRowAction> editActionsForRowAtIndexPath(LKTableView tableView, LKIndexPath indexPath) {
         return new ArrayList<>();
     }
 }

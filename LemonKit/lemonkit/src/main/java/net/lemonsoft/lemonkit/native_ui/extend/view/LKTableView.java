@@ -1,44 +1,46 @@
 package net.lemonsoft.lemonkit.native_ui.extend.view;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.util.DisplayMetrics;
+import android.support.v4.view.GestureDetectorCompat;
+import android.support.v4.widget.ViewDragHelper;
+import android.util.Log;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import net.lemonsoft.lemonkit.core.graphics.CGSize;
 import net.lemonsoft.lemonkit.native_ui.extend.adapter.LKScrollViewDelegateAdapter;
+import net.lemonsoft.lemonkit.native_ui.extend.delegate.LKTableViewDataSource;
+import net.lemonsoft.lemonkit.native_ui.extend.delegate.LKTableViewDelegate;
 import net.lemonsoft.lemonkit.native_ui.model.LKIndexPath;
-import net.lemonsoft.lemonkit.native_ui.model.LKUITableViewRowAction;
+import net.lemonsoft.lemonkit.native_ui.model.LKTableViewRowAction;
 import net.lemonsoft.lemonkit.native_ui.tools.LKSizeTool;
-import net.lemonsoft.lemonkit.ui_kit.delegate.LKUITableView.LKUITableViewDataSource;
-import net.lemonsoft.lemonkit.ui_kit.delegate.LKUITableView.LKUITableViewDelegate;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 /**
+ * 列表控件
  * Created by LiuRi on 2017/1/11.
  */
 
 public class LKTableView extends LKScrollView {
-
-    private LKSizeTool _ST = LKSizeTool.getDefaultSizeTool();
-
+    private ViewDragHelper mDragHelper;
+    private GestureDetectorCompat mGestureDetector;
+    float downY = 0;
+    float downX = 0;
     private Context context;
-    private static WindowManager windowManager;
-    private static DisplayMetrics metric = new DisplayMetrics();
-    public LKUITableViewDataSource dataSource;// 数据源
-    public LKUITableViewDelegate delegate;// 代理
+    public LKTableViewDataSource dataSource;// 数据源
+    public LKTableViewDelegate delegate;// 代理
 
     private LKIndexPath slidedCell;// 已经侧滑的cell的路径，如果没有，则为null
-
     /**
      * 类型记录池，记录池value格式：type_section_row，header:h,footer:f,cell:c,header和footer的row永远为0
      */
@@ -46,13 +48,13 @@ public class LKTableView extends LKScrollView {
     private List<Integer> startLocationRecorder;// 起始位置记录表
 
     private HashMap<LKIndexPath, LKHorizontalScrollView> cellScrollContainerPool;// cell的scrollView缓存池
-    private HashMap<String, LKUITableViewCell> frontCellPool;// 正在显示的cell的父View池
+    private HashMap<String, LKTableViewCell> frontCellPool;// 正在显示的cell的父View池
 
     private RelativeLayout contentView;// 正文控件，实际所有的cell都放到这个view中
 
     ///// 复用机制池 -- 开始
 
-    private HashMap<String, ArrayList<LKUITableViewCell>> reuseCellPool;// cell复用机制池
+    private HashMap<String, ArrayList<LKTableViewCell>> reuseCellPool;// cell复用机制池
     private HashMap<String, ArrayList<View>> reuseHeaderViewPool;// header复用机制池
     private HashMap<String, ArrayList<View>> reuseFooterViewPool;// footer复用机制池
     private HashMap<String, View> frontHeaderPool;// 正在显示的header的父View池
@@ -68,50 +70,56 @@ public class LKTableView extends LKScrollView {
         super(mcontext);
         this.context = mcontext;
         this.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-
+        //初始化手势识别器
+        mGestureDetector = new GestureDetectorCompat(context, mOnGestureListener);
 
         initTableView();
         this.setDelegate(new LKScrollViewDelegateAdapter() {
             @Override
             public void scrollViewDidScroll(LKScrollView scrollView) {
                 super.scrollViewDidScroll(scrollView);
-
-
+                //共多少条
+                int countPage = spaceOfLocation(contentViewHeight);
+                //每页显示多少条
+                int pageViewnum = spaceOfLocation(getHeight());
+                Log.e("scroll change", "" + scrollView.getContentOffset().y);
                 int t = (int) scrollView.getContentOffset().y;
                 int currentTopIndex = spaceOfLocation(t);
                 int currentBottomIndex = spaceOfLocation(t + getHeight());
-                if (currentTopIndex == lastTopIndex && currentBottomIndex == lastBottomIndex)
-                    return;
-                if (t > lastScrollY) {
-                    // tableView向上滚动
-                    if (currentTopIndex > lastTopIndex)// 元素被从屏幕上方滚动出屏幕
-                        for (int i = lastTopIndex; i < currentTopIndex; i++) {
-                            scrollOutScreen(i, typeRecorder.get(i));
-                        }
+                if (currentBottomIndex < countPage) {
 
-                    if (currentBottomIndex > lastBottomIndex)// 元素从屏幕底部滚动进入屏幕
-                        for (int i = lastBottomIndex; i < currentBottomIndex; i++) {
-                            //当前最后一个的下一个进入之前变化
-                            scrollIntoScreen(i + 1, typeRecorder.get(i + 1));
-                        }
 
-                } else if (t < lastScrollY) {
-                    // tableView向下滚动
-                    if (currentTopIndex < lastTopIndex)// 元素被从屏幕上方滚动进入屏幕
-                        for (int i = currentTopIndex; i < lastTopIndex; i++) {
-                            scrollIntoScreen(i, typeRecorder.get(i));
-                        }
+                    if (currentTopIndex == lastTopIndex && currentBottomIndex == lastBottomIndex)
+                        return;
+                    if (t > lastScrollY) {
 
-                    if (currentBottomIndex < lastBottomIndex)// 元素从屏幕底部滚动移出去了
-                        for (int i = currentBottomIndex; i < lastBottomIndex; i++) {
-                            //当前最后一个的下一个进入之前变化
-                            scrollOutScreen(i + 1, typeRecorder.get(i + 1));
-                        }
+                        // tableView向上滚动
+                        if (currentTopIndex > lastTopIndex)// 元素被从屏幕上方滚动出屏幕
+                            for (int i = lastTopIndex; i < currentTopIndex; i++) {
+                                //滚出
+                                scrollOutScreen(i, typeRecorder.get(i));
+                                //i+pageViewnum 是当前哪个需要滚入
+                                scrollIntoScreen(i + pageViewnum + 1, typeRecorder.get(i + pageViewnum + 1));
+                            }
 
+
+                    } else if (t < lastScrollY) {
+                        // tableView向下滚动
+                        if (currentTopIndex < lastTopIndex)// 元素被从屏幕上方滚动进入屏幕
+                            for (int i = currentTopIndex; i < lastTopIndex; i++) {
+                                scrollIntoScreen(i, typeRecorder.get(i));
+                                //i+pageViewnum 是当前哪个需要滚出
+                                scrollOutScreen(i + 1 + pageViewnum, typeRecorder.get(i + 1 + pageViewnum));
+                                //滚入
+
+                            }
+
+
+                    }
+                    lastTopIndex = currentTopIndex;
+                    lastBottomIndex = currentBottomIndex;
+                    lastScrollY = t;// 刷新lastScrollY
                 }
-                lastTopIndex = currentTopIndex;
-                lastBottomIndex = currentBottomIndex;
-                lastScrollY = t;// 刷新lastScrollY
 
             }
         });
@@ -212,16 +220,16 @@ public class LKTableView extends LKScrollView {
      *
      * @param indexPath 当前初始化行的位置信息
      */
-    private LKUITableViewCell initCell(final LKIndexPath indexPath, Integer cellHeight, Integer y) {
+    private LKTableViewCell initCell(final LKIndexPath indexPath, Integer cellHeight, Integer y) {
         final RelativeLayout cellContainerView = new RelativeLayout(context);
         cellContainerView.setX(0);
         cellContainerView.setY(0);
         Integer actionWidth = 0;
         // 通过代理函数获取当前行需要显示的actions
-        List<LKUITableViewRowAction> actions = delegate.editActionsForRowAtIndexPath(this, indexPath);
+        List<LKTableViewRowAction> actions = delegate.editActionsForRowAtIndexPath(this, indexPath);
         //  设置actions相关-开始
         if (actions != null) {
-            for (final LKUITableViewRowAction action : actions) {
+            for (final LKTableViewRowAction action : actions) {
                 RelativeLayout actionItemLayout = new RelativeLayout(context);
                 actionItemLayout.setLayoutParams(new RelativeLayout.LayoutParams(action.getWidth(), cellHeight));// 初始化action控件大小
                 action.getContainerView().setLayoutParams(new RelativeLayout.LayoutParams(action.getWidth(), cellHeight));// 设置action控件高度为cell高度
@@ -258,19 +266,29 @@ public class LKTableView extends LKScrollView {
         scrollView.setY(y);// 顶部开始
 
         final Integer finalActionWidth = actionWidth;
-        scrollView.requestDisallowInterceptTouchEvent(true);
+
+
         scrollView.setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                if (flage) {
+                    //纵向手势时横向禁止滑动
+                    return false;
+                }
+
                 if (event.getAction() == event.ACTION_MOVE && !indexPath.equals(slidedCell)) {
                     closeCurrentSlide();// 关闭当前侧滑
                 }
                 if (event.getAction() == event.ACTION_UP) {// 判断是触摸抬起的时候
-                    if (scrollView.getScrollX() < finalActionWidth / 2)
-                        scrollView.smoothScrollTo(0, 0);// 平滑回到0
-                    else {
-                        scrollView.smoothScrollTo(finalActionWidth, 0);// 平滑移动到完全打开
+
+                    if (v.getScrollX() < finalActionWidth / 2) {
+                        ((LKHorizontalScrollView) v).smoothScrollTo(0, 0);// 平滑回到0
+                    } else {
+                        ((LKHorizontalScrollView) v).smoothScrollTo(finalActionWidth, 0);// 平滑移动到完全打开
                     }
+                    //抬起后滑动手势重新初始化
+                    LKScrollView.touchFlage = false;
+                    flage = true;
                     return true;// 这里返回true，否则smoothScrollTo不可用
                 }
                 return false;
@@ -300,9 +318,10 @@ public class LKTableView extends LKScrollView {
                 delegate.didSelectRowAtIndexPath(LKTableView.this, indexPath);// 调用代理中的行点击事件
             }
         });
-        LKUITableViewCell cell = dataSource.cellForRowAtIndexPath(this, indexPath);
+        LKTableViewCell cell = dataSource.cellForRowAtIndexPath(this, indexPath);
         cell.setLayoutParams(cellSizeParams);
         cellContentView.addView(cell);// 把LKTableViewCell控件实际放入到contentView中显示
+
         cellContainerView.addView(cellContentView);
         contentView.addView(scrollView);// 把cell添加到整个显示区的容器view中
         cellScrollContainerPool.put(indexPath, scrollView);
@@ -396,48 +415,6 @@ public class LKTableView extends LKScrollView {
     private int lastBottomIndex;
     private int lastScrollY = 0;
 
-//    @Override
-    /**
-     * 整个tableView滑动的回调函数，用来动态计算哪些元素滚入滚出，复用机制调用
-     */
-//    protected void onScrollChanged(int l, int t, int oldl, int oldt) {
-//        super.onScrollChanged(l, t, oldl, oldt);
-//        int currentTopIndex = spaceOfLocation(t);
-//        int currentBottomIndex = spaceOfLocation(t + getHeight());
-//        if (currentTopIndex == lastTopIndex && currentBottomIndex == lastBottomIndex)
-//            return;
-//        if (t > lastScrollY) {
-//            // tableView向上滚动
-//            if (currentTopIndex > lastTopIndex)// 元素被从屏幕上方滚动出屏幕
-//                for (int i = lastTopIndex; i < currentTopIndex; i++) {
-//                    scrollOutScreen(i, typeRecorder.get(i));
-//                }
-//
-//            if (currentBottomIndex > lastBottomIndex)// 元素从屏幕底部滚动进入屏幕
-//                for (int i = lastBottomIndex; i < currentBottomIndex; i++) {
-//                    //当前最后一个的下一个进入之前变化
-//                    scrollIntoScreen(i + 1, typeRecorder.get(i + 1));
-//                }
-//
-//        } else if (t < lastScrollY) {
-//            // tableView向下滚动
-//            if (currentTopIndex < lastTopIndex)// 元素被从屏幕上方滚动进入屏幕
-//                for (int i = currentTopIndex; i < lastTopIndex; i++) {
-//                    scrollIntoScreen(i, typeRecorder.get(i));
-//                }
-//
-//            if (currentBottomIndex < lastBottomIndex)// 元素从屏幕底部滚动移出去了
-//                for (int i = currentBottomIndex; i < lastBottomIndex; i++) {
-//                    //当前最后一个的下一个进入之前变化
-//                    scrollOutScreen(i + 1, typeRecorder.get(i + 1));
-//                }
-//
-//        }
-//        lastTopIndex = currentTopIndex;
-//        lastBottomIndex = currentBottomIndex;
-//        lastScrollY = t;// 刷新lastScrollY
-//    }
-
     /**
      * 滚动进入屏幕
      */
@@ -455,15 +432,18 @@ public class LKTableView extends LKScrollView {
             if (indexPath != null && indexPath.equals(slidedCell))// 移除屏幕的cell要关闭侧滑
                 closeCurrentSlide();// 关闭当前侧滑的cell
             // cell -> cellContentView -> cellContainerView -> scrollView
-            LKUITableViewCell cell = frontCellPool.get(pathInfo);
+            LKTableViewCell cell = frontCellPool.get(pathInfo);
             if (cell != null) {// 不是null
                 this.contentView.removeView((View) cell.getParent().getParent().getParent());// 从当前视图中移除控件
                 ((ViewGroup) cell.getParent()).removeView(cell);
                 if (!reuseCellPool.containsKey(cell.getReuseIdentifier()) ||
                         reuseCellPool.get(cell.getReuseIdentifier()) == null)// 没有这个服用标识或者不存在list
-                    reuseCellPool.put(cell.getReuseIdentifier(), new ArrayList<LKUITableViewCell>());// 那么重新创建一个list放到复用池中
+                    reuseCellPool.put(cell.getReuseIdentifier(), new ArrayList<LKTableViewCell>());// 那么重新创建一个list放到复用池中
                 if (cell.getReuseIdentifier() != null)// 存在复用标识
+                {
+                    Log.e("放入控件：", "=============" + index);
                     reuseCellPool.get(cell.getReuseIdentifier()).add(frontCellPool.get(pathInfo));// 把cell放到复用池中
+                }
             }
             frontCellPool.remove(pathInfo);// 从控件存储池中移除
         } else if (pathInfo.startsWith("h")) {
@@ -474,7 +454,10 @@ public class LKTableView extends LKScrollView {
                         reuseHeaderViewPool.get(pathInfo) == null)// 没有这个服用标识或者不存在list
                     reuseHeaderViewPool.put(pathInfo, new ArrayList<View>());// 那么重新创建一个list放到复用池中
                 if (pathInfo != null)// 存在复用标识
+                {
                     reuseHeaderViewPool.get(pathInfo).add(frontHeaderPool.get(pathInfo));// 把header放到复用池中
+                }
+
             }
             frontHeaderPool.remove(pathInfo);// 从控件存储池中移除
         } else {
@@ -542,6 +525,9 @@ public class LKTableView extends LKScrollView {
      */
     public void initLineWithRecorderItemIndex(Integer recorderItemIndex) {
         String pathInfo = typeRecorder.get(recorderItemIndex);
+        if (pathInfo == null)
+            return;
+        ;
         String[] items = pathInfo.split("_");
         LKIndexPath indexPath = getIndexPathWithPathInfoString(pathInfo);
         switch (items[0]) {
@@ -567,18 +553,14 @@ public class LKTableView extends LKScrollView {
      * @param identifier 复用标识字符串
      * @return 复用池中存储的对应cell
      */
-    public LKUITableViewCell dequeueReusableCellWithIdentifier(String identifier) {
-        System.out.println(" ---> time from : " + System.currentTimeMillis());
+    public LKTableViewCell dequeueReusableCellWithIdentifier(String identifier) {
         if (reuseCellPool.containsKey(identifier) &&
                 reuseCellPool.get(identifier) != null &&
                 reuseCellPool.get(identifier).size() > 0) {
-            LKUITableViewCell cell = reuseCellPool.get(identifier).get(0);
+            LKTableViewCell cell = reuseCellPool.get(identifier).get(0);
             reuseCellPool.remove(identifier).remove(0);// 从复用池中移除
-            System.out.println(" ---> time to : " + System.currentTimeMillis());
             return cell;
         }
-        System.out.println(" ERRRR: " + identifier);
-        System.out.println(" ---> time to : " + System.currentTimeMillis());
         return null;
     }
 
@@ -589,7 +571,6 @@ public class LKTableView extends LKScrollView {
      * @return 复用池中存储的对应View header
      */
     public View dequeueReusableHeaderWithIdentifier(String identifier) {
-
         if (reuseHeaderViewPool.containsKey(identifier) &&
                 reuseHeaderViewPool.get(identifier) != null &&
                 reuseHeaderViewPool.get(identifier).size() > 0) {
@@ -597,8 +578,6 @@ public class LKTableView extends LKScrollView {
             reuseHeaderViewPool.remove(identifier).remove(0);// 从复用池中移除
             return view;
         }
-        System.out.println(" ERRRR: " + identifier);
-        System.out.println(" ---> time to : " + System.currentTimeMillis());
         return null;
     }
 
@@ -624,14 +603,6 @@ public class LKTableView extends LKScrollView {
     }
 
     //// 复用机制方法 - 结束
-
-
-//    @Override
-//    public void fling(int velocityY) {
-//
-//        //改变滑动速度为原来的1/4
-//        super.fling(velocityY / 4);
-//    }
 
     @Override
     public void setLayoutParams(ViewGroup.LayoutParams params) {
@@ -668,7 +639,6 @@ public class LKTableView extends LKScrollView {
                     currentBottomIndex = spaceOfLocation(changeHei + getHeight());
                     if (currentBottomIndex > lastBottomIndex && lastBottomIndex > countPage)// 元素从屏幕底部滚动进入屏幕
                     {
-                        System.out.println(lastBottomIndex + "------------============---------" + countPage);
                         for (int i = lastBottomIndex; i < currentBottomIndex; i++) {
                             //当前最后一个的下一个进入之前变化
                             scrollIntoScreen(i + 1, typeRecorder.get(i + 1));
@@ -696,5 +666,33 @@ public class LKTableView extends LKScrollView {
             }
         }
     }
+
+
+    //横向是否可滑动标识
+    boolean flage = true;
+
+
+    @Override
+    public boolean onInterceptTouchEvent(android.view.MotionEvent ev) {
+
+        // 决定当前的SwipeLayout是否要把touch事件拦截下来，直接交由自己的onTouchEvent处理
+        // 返回true则为拦截
+        flage = mGestureDetector.onTouchEvent(ev);
+        LKScrollView.touchFlage = !flage;
+        if (flage)
+            closeCurrentSlide();
+        return flage;
+    }
+
+    private android.view.GestureDetector.SimpleOnGestureListener mOnGestureListener = new GestureDetector.SimpleOnGestureListener() {
+
+        @Override
+        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+
+            // 当纵向移动距离大于等于横向时，返回true
+            return Math.abs(distanceX) <= Math.abs(distanceY);
+
+        }
+    };
 
 }

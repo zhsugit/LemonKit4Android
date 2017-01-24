@@ -27,4 +27,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.github.1em0nsOft:LemonBubble4Android:1.0.6'
     compile project(':lemonkit')
+    compile 'com.facebook.fresco:fresco:0.12.0'
 }

@@ -2,14 +2,14 @@ package net.lemonsoft.lemonkit.native_ui.extend.adapter;
 
 import android.view.View;
 
+import net.lemonsoft.lemonkit.native_ui.extend.delegate.LKTableViewDataSource;
 import net.lemonsoft.lemonkit.native_ui.extend.view.LKTableView;
-import net.lemonsoft.lemonkit.ui_kit.delegate.LKUITableView.LKUITableViewDataSource;
 
 /**
  * LKUITableView的数据源适配器
  * Created by lemonsoft on 16-10-12.
  */
-public abstract class LKUITableViewDataSourceAdapter implements LKUITableViewDataSource {
+public abstract class LKTableViewDataSourceAdapter implements LKTableViewDataSource {
 
     @Override
     public Integer numberOfSectionsInTableView(LKTableView tableView) {

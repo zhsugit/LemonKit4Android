@@ -1,15 +1,15 @@
-package net.lemonsoft.lemonkit.ui_kit.delegate.LKUITableView;
+package net.lemonsoft.lemonkit.native_ui.extend.delegate;
 
 import net.lemonsoft.lemonkit.native_ui.extend.view.LKTableView;
 import net.lemonsoft.lemonkit.native_ui.model.LKIndexPath;
-import net.lemonsoft.lemonkit.native_ui.model.LKUITableViewRowAction;
+import net.lemonsoft.lemonkit.native_ui.model.LKTableViewRowAction;
 
 import java.util.List;
 
 /**
  * 代理接口
  */
-public interface LKUITableViewDelegate {
+public interface LKTableViewDelegate {
     // Variable height support
     Integer heightForRowAtIndexPath(LKTableView tableView, LKIndexPath indexPath);
 
@@ -19,5 +19,5 @@ public interface LKUITableViewDelegate {
 
     void didSelectRowAtIndexPath(LKTableView tableView, LKIndexPath indexPath);
 
-    List<LKUITableViewRowAction> editActionsForRowAtIndexPath(LKTableView tableView, LKIndexPath indexPath);
+    List<LKTableViewRowAction> editActionsForRowAtIndexPath(LKTableView tableView, LKIndexPath indexPath);
 }

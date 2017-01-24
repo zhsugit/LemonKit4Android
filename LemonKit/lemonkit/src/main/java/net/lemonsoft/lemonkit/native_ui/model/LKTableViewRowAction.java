@@ -13,7 +13,7 @@ import net.lemonsoft.lemonkit.native_ui.tools.LKSizeTool;
  * LKTableView的侧滑事件，在cell的对应代理函数中，返回一个该类型的list后即可生成对应效果的侧滑菜单
  * Created by lemonsoft on 16-9-28.
  */
-public class LKUITableViewRowAction {
+public class LKTableViewRowAction {
 
     /**
      * 容器控件
@@ -37,16 +37,17 @@ public class LKUITableViewRowAction {
      */
     private TouchAction touchAction;
 
-    private LKUITableViewRowAction() {
+    private LKTableViewRowAction() {
     }
 
-    public LKUITableViewRowAction(View containerView, Integer width, int backgroundColor, TouchAction touchAction) {
+    public LKTableViewRowAction(View containerView, Integer width, int backgroundColor, TouchAction touchAction) {
         this.containerView = containerView;
         this.width = width;
         this.backgroundColor = backgroundColor;
         this.touchAction = touchAction;
     }
-    public LKUITableViewRowAction(Context context, String title, int textColor, int backgroundColor, TouchAction touchAction) {
+
+    public LKTableViewRowAction(Context context, String title, int textColor, int backgroundColor, TouchAction touchAction) {
         this(new TextView(context), LKSizeTool.getDefaultSizeTool().dpToPx(30f), backgroundColor, touchAction);
         TextView titleView = (TextView) containerView;
         titleView.setText(title);
@@ -54,6 +55,7 @@ public class LKUITableViewRowAction {
         titleView.setGravity(Gravity.CENTER);
         setWidth(LKSizeTool.getDefaultSizeTool().dpToPx(14f) * title.length() + getWidth());
     }
+
 
     public View getContainerView() {
         return containerView;
@@ -102,7 +104,7 @@ public class LKUITableViewRowAction {
          * @param rowAction 点击的rowAction
          * @param indexPath 当前行的位置
          */
-        void onTouch(LKTableView tableView, LKUITableViewRowAction rowAction, LKIndexPath indexPath);
+        void onTouch(LKTableView tableView, LKTableViewRowAction rowAction, LKIndexPath indexPath);
     }
 
 }

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff">
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="10dp"
+        android:background="@color/bg_list_bottom_line" />
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/home_house_icon"
+        android:layout_width="120dp"
+        android:layout_height="90dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
+        fresco:placeholderImage="@mipmap/ic_launcher"
+        android:scaleType="matrix" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_toRightOf="@+id/home_house_icon"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/home_house_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:singleLine="true"
+            android:text="中山三八广场嘉和花样年华1期"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/home_house_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="整租.1室.1厅.122.00平"
+            android:textColor="@color/black_6"
+            android:textSize="12sp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/home_house_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="￥111元/月"
+                android:textColor="@color/red2" />
+
+            <!-- 是否分期 00：否 01 ：是 -->
+
+            <ImageView
+                android:id="@+id/home_house_rentInstallment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/margin_15"
+                android:layout_toRightOf="@+id/home_house_price"
+                android:src="@mipmap/ic_rentinstallment" />
+
+            <ImageView
+                android:id="@+id/home_house_real_housing_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/margin_15"
+                android:src="@mipmap/ic_real_housing_bg" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/rl_feature"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="bottom"
+            android:orientation="horizontal"></LinearLayout>
+    </LinearLayout>
+
+
+</RelativeLayout>

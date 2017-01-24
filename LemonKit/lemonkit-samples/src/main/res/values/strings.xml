@@ -1,3 +1,411 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">LemonKit</string>
+    <string name="app_name">大连租房</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <!-- 标题栏 搜索 -->
+    <string name="top_bar_search_hint">输入小区、商圈名称</string>
+    <!-- 首页字符串如下 -->
+    <string name="home_selected">精选</string>
+    <string name="net_connect_exception">网络连接异常</string>
+    <string name="net_data_get_fail">获取数据失败</string>
+    <string name="net_data_paser_exception">数据解析异常</string>
+    <string name="home_collect_suc">收藏成功</string>
+    <string name="home_collect_back_suc">取消收藏成功</string>
+    <string name="home_collect_fail">收藏失败</string>
+    <string name="home_rent_owner_directly">业主直租</string>
+    <string name="home_intermediary_publish">中介发布</string>
+    <!-- 我的合同\更多 -->
+    <string name="personal_contract_status">合同状态</string>
+    <string name="personal_feedback_hint">请输入120字以内的内容</string>
+    <string name="personal_feedback_submit">提交</string>
+    <!-- 我的钱包 -->
+    <string name="personal_wallet_changes">零钱</string>
+    <string name="personal_wallet_bank">银行卡</string>
+    <string name="personal_budget">收支明细</string>
+    <!-- 网络不可用 -->
+    <string name="net_connected_failed">网络不可用</string>
+    <!-- 按back键提示 -->
+    <string name="exit_toast_txt">再按一次,退出程序</string>
+    <!-- 图片异步下载 -->
+    <string name="pic_too_large">图片过大</string>
+    <string name="pic_load_err">图片下载错误</string>
+    <!-- 登录页面 -->
+    <string name="login_input_tel">请输入电话号码</string>
+    <string name="login_input_user_name">用户名/手机号</string>
+    <string name="login_input_pwd">请输入8~18位密码</string>
+    <string name="login_input_confirm_pwd">确认密码</string>
+    <string name="login_regist_txt">登录/注册</string>
+    <string name="login_txt">登录</string>
+    <string name="login_forget_pwd">忘记密码?</string>
+    <!-- 注册页面 -->
+    <string name="regist_txt">注册</string>
+    <string name="regist_input_verify_code_txt">请输入验证码</string>
+    <string name="regist_get_verify_code_txt">获取验证码</string>
+    <string name="regist_service_provision_prefix">点击注册则代表您已同意</string>
+    <string name="regist_service_provision_suffix">《大连租房网用户协议》</string>
+    <!-- 我的页面 -->
+    <string name="my_contract_txt">我的合同</string>
+    <string name="my_house_txt">我的房源</string>
+    <string name="my_wallet_txt">我的钱包</string>
+    <string name="my_set_txt">个人设置</string>
+    <string name="my_more_txt">更多</string>
+    <string name="my_user_logout_txt">注销</string>
+    <!-- 密码找回页面 -->
+    <string name="retrieve_pwd_txt">找回密码</string>
+    <string name="retrieve_not_accord_txt">确认密码不符</string>
+    <string name="retrieve_return_msgid_error">验证码不正确</string>
+    <!-- 业主委托页面 tab 选项卡 -->
+    <string name="owner_entrust_topbar_title">委托发布</string>
+    <string name="owner_entrust_my_entrust">我的委托</string>
+    <string name="owner_entrust_my_entrust_cancel">取消委托</string>
+    <string name="owner_entrust_house">验房预约</string>
+    <string name="house_booking_topbar_title">验房预约</string>
+    <string name="house_booking_topbar_delete">删除</string>
+    <string name="publish_entrust_topbar_title">发布委托</string>
+    <string name="publish_entrust_topbar_title_record">记录</string>
+    <string name="publish_entrust_topbar_title_sel_intermediary">选择中介</string>
+    <string name="publish_entrust_all">全部</string>
+    <string name="publish_entrust_hot">热门</string>
+    <string name="publish_entrust_level">评级</string>
+    <string name="publish_entrust_money">佣金</string>
+    <string name="publish_entrust_screen_order">筛选顺序</string>
+    <string name="select_busin_circle_title">房源所在商圈</string>
+    <string name="select_busin_circle_topbar_confirm">确定</string>
+    <string name="select_busin_circle_sel_title">请选择</string>
+    <string name="select_busin_circle_input_title">请输入</string>
+    <!-- 搜索框 -->
+    <string name="search_input_txt">搜索中介公司</string>
+    <!-- 整租 -->
+    <string name="all_rent_search_default_val">请输入小区/商圈/地点搜索</string>
+    <string name="all_rent_menu_area">区域</string>
+    <string name="all_rent_menu_price">价格</string>
+    <string name="all_rent_menu_mode">方式</string>
+    <string name="all_rent_menu_more">更多</string>
+    <!-- 整租详情 -->
+    <string name="all_rent_detail_mNo">房源编号</string>
+    <string name="all_rent_detail_mCheckinTime">入住时间</string>
+    <string name="all_rent_detail_mFacilities">配套设施</string>
+    <string name="all_rent_detail_mRoomInfo">房间信息</string>
+    <string name="all_rent_detail_mPosition">位置信息</string>
+    <string name="all_rent_detail_mAround">周边设施</string>
+    <string name="all_rent_detail_mHouseDesc">房源描述</string>
+    <string name="all_rent_detail_mOtherRecommend">其他推荐</string>
+    <!-- 分享，top bar -->
+    <string name="top_share_bar_edit">编辑</string>
+    <!-- 消息 -->
+    <string name="msg_title">消息</string>
+    <!-- 收藏 -->
+    <string name="clt_title">收藏</string>
+    <!-- dialog -->
+    <string name="dialog_title">提示信息</string>
+    <string name="dialog_ok">确定</string>
+    <string name="dialog_cancel">取消</string>
+    <!-- 下拉刷新 -->
+    <string name="pull_to_refresh">下拉可以刷新</string>
+    <string name="release_to_refresh">释放立即刷新</string>
+    <string name="refreshing">正在刷新...</string>
+    <string name="refresh_succeed">刷新成功</string>
+    <string name="refresh_fail">刷新失败</string>
+    <string name="pullup_to_load">上拉加载更多</string>
+    <string name="release_to_load">释放立即加载</string>
+    <string name="pullup_to_load_no_data">没有更多数据</string>
+    <string name="loading">正在加载...</string>
+    <string name="load_succeed">加载成功</string>
+    <string name="load_fail">加载失败</string>
+    <string name="not_updated_yet">暂未更新过</string>
+    <string name="updated_at">上次更新于%1$s前</string>
+    <string name="updated_just_now">刚刚更新</string>
+    <string name="time_error">时间有问题</string>
+    <!-- 发布房源 -->
+    <string name="publish_house_topbar_title">发布房源</string>
+    <string name="i_want_rent_house">我要租房</string>
+    <string name="topbar_confirm">确定</string>
+    <string name="publish_house_next">下一步</string>
+    <string name="publish_house_select_sex">请选择您的性别：</string>
+    <string name="publish_house_sex">性别</string>
+    <string name="publish_house_male">男</string>
+    <string name="publish_house_female">女</string>
+    <!-- poup window -->
+    <string name="poup_btn_sure">确定</string>
+    <string name="poup_btn_reset">重置</string>
+    <!-- 错误信息定义 -->
+    <string name="entrust_list_get_30002">用户信息不存在</string>
+    <string name="entrust_list_get_30009">无有效数据</string>
+    <string name="del_success">删除成功</string>
+    <string name="del_fail">删除失败</string>
+    <string name="get_data_fail">获取数据失败</string>
+    <!-- 我的钱包 -->
+    <string name="start_apply_sign_judge">您还没有绑定银行卡，快去绑定吧</string>
+    <string name="walletcash_title">零钱</string>
+    <string name="wallet_title">我的钱包</string>
+    <string name="cash_title">提现</string>
+    <string name="budget_detail">全部账单</string>
+    <string name="myWallet">我的钱包</string>
+    <string name="bankManage">银行卡</string>
+    <string name="noMoney">没有可以提取的零钱</string>
+    <string name="currentAmount">当前零钱余额</string>
+    <string name="units">元，</string>
+    <string name="cashedAmount">请输入提现金额</string>
+    <string name="bankInfo">银行卡信息</string>
+    <string name="cardType">卡类型</string>
+    <string name="mobleNum">银行预留手机号</string>
+    <string name="input">请输入</string>
+    <string name="next">下一步</string>
+    <string name="selectBankCardType">请选择银行卡类型</string>
+    <string name="myHouse">我的房源</string>
+    <string name="myContacts">全部合同</string>
+    <!-- 个人设置 -->
+    <string name="personal_setting">个人设置</string>
+    <string name="personal_setting_identity">身份信息</string>
+    <string name="personal_setting_password">密码管理</string>
+    <string name="personal_setting_moble">修改手机</string>
+    <string name="personal_setting_pay_password">忘记支付密码</string>
+    <string name="personal_setting_pay_password_manage">支付密码管理</string>
+    <string name="input_new_password">设置新密码</string>
+    <string name="input_agin_new_password">确认新密码</string>
+    <string name="update_login_password">修改登录密码</string>
+    <string name="input_login_password">请输入登录密码</string>
+    <string name="update_pay_password">修改支付密码</string>
+    <string name="update_pay_orldpaypassword">输入原支付密码</string>
+    <string name="update_pay_newpaypassword">设置新支付密码</string>
+    <string name="update_pay_confirmpaypassword">确认新支付密码</string>
+    <string name="finish">完成</string>
+    <string name="update_confirm">确认修改</string>
+    <string name="login_input_new_tel">输入新手机号</string>
+    <string name="save">保存</string>
+    <string name="add_identity">添加身份证件</string>
+    <string name="confirm">确认</string>
+    <string-array name="psw_manage_array">
+        <item>修改登录密码</item>
+        <item>设置支付密码</item>
+    </string-array>
+    <string-array name="pay_psw_manage_array">
+        <item>修改支付密码</item>
+        <item>忘记支付密码</item>
+    </string-array>
+    <string-array name="bind_bank">
+        <item>招商银行</item>
+        <item>中国银行</item>
+        <item>工商银行</item>
+        <item>农业银行</item>
+        <item>邮政储蓄</item>
+    </string-array>
+    <string-array name="identity">
+        <item>身份证</item>
+        <item>军人身份证件</item>
+        <item>武装警察身份证件</item>
+        <item>港澳居民来往证</item>
+        <item>台湾居民来往证</item>
+        <item>护照</item>
+    </string-array>
+    <string name="pay_title">请输入支付密码</string>
+    <string name="pay_froget_password">忘记密码?</string>
+    <string name="pay_cancel">取消</string>
+    <string name="pay_content">消费金额：34.50元</string>
+    <!-- 登录/注册 -->
+    <string-array name="tab_names">
+        <item>登录</item>
+        <item>注册</item>
+    </string-array>
+    <!-- 解绑/取消 -->
+    <string-array name="tab_isbind">
+        <item>解绑</item>
+        <item>取消</item>
+    </string-array>
+    <!-- 确认申请 -->
+    <string name="check_apply_lessor">费用承担</string>
+    <string name="check_apply_lessor_other">其它</string>
+    <string name="check_apply_edit">编辑</string>
+    <string name="check_apply_project">项目</string>
+    <string name="check_apply_brand">品牌</string>
+    <string name="check_apply_units">单位</string>
+    <string name="check_apply_number">数量</string>
+    <string name="check_apply_price">单价</string>
+    <string name="check_apply_stime">起计时间</string>
+    <string name="check_apply_scount">起计底数</string>
+    <string name="check_apply_money">损陪金额</string>
+    <string name="check_apply_backup">备注</string>
+    <string name="check_apply_add_other_charges">添加其他相关费用</string>
+    <string name="check_apply_add_facility">添加设施</string>
+    <string name="check_apply_blame">责任条款</string>
+    <string name="check_apply_management">管理方式</string>
+    <!-- 实际使用人 -->
+    <string name="real_username">姓名</string>
+    <string name="real_cellphone">手机</string>
+    <string name="real_idCardType">证件类型</string>
+    <string name="real_idCardNo">证件号码</string>
+    <string name="imgDiscribe">内容选择</string>
+    <string name="input_pay_paypassword">请输入新支付密码</string>
+    <string name="input_pay_confirmpaypassword">请再次输入新支付密码</string>
+    <!-- 租凭期限 -->
+    <string name="term_year">年</string>
+    <string name="term_month">月</string>
+    <string name="year">年</string>
+    <string name="month">月</string>
+    <string name="day">日</string>
+    <!-- 发布房源第一步 -->
+    <string name="publish_house_property_rt">房屋产权</string>
+    <string name="publish_house_check_fail_desc">房源审核失败：原因(证件照片不清晰)</string>
+    <string name="publish_house_property_rt_type">产权类型</string>
+    <string name="publish_house_propertyRtType_ntnmsg">请选择产权类型</string>
+    <string name="publish_house_certificates_code">证件编号</string>
+    <string name="publish_house_certificates_code_ntnmsg">请输入证件编号</string>
+    <string name="publish_house_certificates_photo">证件照片</string>
+    <string name="publish_house_certificates_photo_desc">请上传含产权所属编号、产权所属人信息照片</string>
+    <string name="publish_house_property_rt_owner">产权所有人信息 </string>
+    <string name="publish_house_house_res">房源信息</string>
+    <string name="publish_house_address">详细地址</string>
+    <string name="publish_house_address_ntnmsg">请输入详细地址</string>
+    <string name="publish_house_area">建筑面积</string>
+    <string name="publish_house_area_ntnmsg">请输入建筑面积</string>
+    <string name="publish_house_lease_type">出租方式</string>
+    <string name="publish_house_lease_type_ntnmsg">出租方式不能为空</string>
+    <string name="publish_house_next_btn">下一步</string>
+    <!-- 发布房源，发布，合租 -->
+    <string name="publish_house_publish_jrt_add_photo">点击添加照片</string>
+    <string name="publish_house_publish_jrt_house_info">房屋信息</string>
+    <string name="publish_house_publish_jrt_house_info_desc">填写房屋戶型、楼层、所在商圈等信息</string>
+    <string name="publish_house_publish_jrt_lease_info">出租信息</string>
+    <string name="publish_house_publish_jrt_lease_info_desc">设置出租房间租金，付款方式，入住时间等信息</string>
+    <string name="publish_house_publish_jrt_more_info">更多信息</string>
+    <string name="publish_house_publish_jrt_more_desc">豪宅、精装修、学区房、可以打高尔夫、周六日有patty</string>
+    <string name="publish_house_publish_jrt_btn_publish">发布</string>
+    <!-- 发布房源，发布，整租 -->
+    <string name="publish_house_publish_art_add_photo">点击添加照片</string>
+    <string name="publish_house_publish_art_house_info">房屋信息</string>
+    <string name="publish_house_publish_art_house_info_desc">填写房屋戶型、楼层、所在商圈等信息</string>
+    <string name="publish_house_publish_art_lease_info">出租信息</string>
+    <string name="publish_house_publish_art_lease_info_desc">设置出租房间租金，付款方式，入住时间等信息</string>
+    <string name="publish_house_publish_art_more_info">更多信息</string>
+    <string name="publish_house_publish_art_more_desc">添加房屋设施,房屋描述等信息</string>
+    <string name="publish_house_publish_art_btn_publish">发布</string>
+    <!-- 发布房源，更多 -->
+    <string name="publish_house_more_facilities">房屋设施</string>
+    <string name="publish_house_more_electric">配套家电</string>
+    <string name="publish_house_more_feature">房屋特色</string>
+    <string name="publish_house_more_lcessee_bear">房主承担费用</string>
+    <string name="publish_house_rental_requir">租房要求</string>
+    <string name="publish_house_more_lessee_bear_other">其他</string>
+    <string name="publish_house_more_btn_save">保存</string>
+    <!-- 发布房源，出租信息，合租 -->
+    <string name="publish_house_lease_jrt_add_photo">点击添加照片</string>
+    <string name="publish_house_lease_jrt_floor">房间名称</string>
+    <string name="publish_house_lease_jrt_floor_ntnmsg">请输入房间名称</string>
+    <string name="publish_house_lease_jrt_lease_area">出租面积</string>
+    <string name="publish_house_lease_jrt_lease_area_ntnmsg">请填写出租面积</string>
+    <string name="publish_house_lease_jrt_room_rent">房间租金</string>
+    <string name="publish_house_lease_jrt_room_rent_ntnmsg">请填写房间租金</string>
+    <string name="publish_house_lease_jrt_rent_type_name">付款方式</string>
+    <string name="publish_house_lease_jrt_rent_type_name_ntnmsg">请选择付款方式</string>
+    <string name="publish_house_lease_jrt_check_time">可入住时间</string>
+    <string name="publish_house_lease_jrt_check_time_ntnmsg">请选择可入住时间</string>
+    <string name="publish_house_lease_jrt_room_description">房间描述</string>
+    <string name="publish_house_lease_jrt_room_description_ntnmsg">请填写房间描述</string>
+    <string name="publish_house_lease_jrt_room_description_hint">致电请说明房源信息在大连租房网看到的</string>
+    <string name="publish_house_lease_jrt_btn_save">保存</string>
+    <string name="publish_house_lease_jrt_btn_save_success">保存成功</string>
+    <string name="publish_house_publish_dialog_message">您发布的信息不完整，租客无法搜索到您的房源信息，为保证您的房子能够尽快出租成功，请您继续维护房源信息。</string>
+    <string name="publish_house_publish_succes_dialog_message">您的房源信息已经发布，审核将在24小时内完成，敬请关注。</string>
+    <!-- 发布房源，出租信息，整租 -->
+    <string name="publish_house_lease_art_rent">意向租金</string>
+    <string name="publish_house_lease_art_rent_ntnmsg">请输入意向租金</string>
+    <string name="publish_house_lease_art_rent_type">付款方式</string>
+    <string name="publish_house_lease_art_rent_type_ntnmsg">请选择付款方式</string>
+    <string name="publish_house_lease_art_checkin_time">可入住时间</string>
+    <string name="publish_house_lease_art_checkin_time_ntnmsg">请选择可入住时间</string>
+    <string name="publish_house_lease_art_btn_save">保存</string>
+    <!-- 发布房源，房屋信息 -->
+    <string name="publish_house_info_house_type">物业类型</string>
+    <string name="publish_house_info_house_type_ntnmsg">请选择物业类型</string>
+    <string name="publish_house_info_apartment_layout">户型</string>
+    <string name="publish_house_info_room_count">室</string>
+    <string name="publish_house_info_hall_count">厅</string>
+    <string name="publish_house_info_washroom_count">卫</string>
+    <string name="publish_house_info_apartment_layout_ntnmsg">请填写户型</string>
+    <string name="publish_house_info_floor_num">楼层</string>
+    <string name="publish_house_info_floor_num_ntnmsg">请填写楼层</string>
+    <string name="publish_house_info_floor_count_begin">共</string>
+    <string name="publish_house_info_floor_count_end">层</string>
+    <string name="publish_house_info_floor_count_ntnmsg">请填写总共楼层</string>
+    <string name="publish_house_info_orientation">房屋朝向</string>
+    <string name="publish_house_info_orientation_ntnmsg">请填写房屋朝向</string>
+    <string name="publish_house_info_decor">装修</string>
+    <string name="publish_house_info_decor_ntnmsg">请填写装修</string>
+    <string name="publish_house_info_village_name">所在小区</string>
+    <string name="publish_house_info_village_name_ntnmsg">请填写所在小区</string>
+    <string name="publish_house_info_district">所在商圈 </string>
+    <string name="publish_house_info_district_ntnmsg">请填写所在商圈</string>
+    <string name="publish_house_info_description">房源描述</string>
+    <string name="publish_house_info_description_ntnmsg">请填写房源描述</string>
+    <string name="publish_house_info_description_hint">致电请说明房源信息在大连租房网看到的</string>
+    <string name="publish_house_info_btn_save">保存</string>
+    <string name="publish_house_info_description_text_small">描述小于150字</string>
+    <!-- 发布房源，照片添加 -->
+    <string name="publish_house_img_btn_sure">确定</string>
+    <!-- 发布房源,共通页面，编辑 -->
+    <string name="publish_house_edit_property_id_no">证件编号</string>
+    <string name="publish_house_edit_property_id_no_ntnmsg">请输入证件编号</string>
+    <string name="publish_house_edit_property_rt_owner_name">姓名</string>
+    <string name="publish_house_edit_property_rt_owner_name_ntnmsg">请填写共有人姓名</string>
+    <string name="publish_house_edit_property_rt_tel">电话号码</string>
+    <string name="publish_house_edit_property_rt_tel_ntnmsg">请填写电话号码</string>
+    <string name="publish_house_edit_certificatesType">证件类型</string>
+    <string name="publish_house_edit_certificatesType_ntnmsg">请选择共有人证件类型</string>
+    <string name="publish_house_edit_certificates_no">证件号码</string>
+    <string name="publish_house_edit_certificates_no_ntnmsg">请输入共有人证件编号</string>
+    <string name="publish_house_edit_certificates_no_reg">证件编号不合法</string>
+    <string name="publish_house_edit_house_addr">详细地址</string>
+    <string name="publish_house_edit_house_addr_ntnmsg">请输入详细地址</string>
+    <string name="publish_house_edit_building_area">建筑面积</string>
+    <string name="publish_house_edit_building_area_ntnmsg">请输入建筑面积</string>
+    <!-- 我的合同列表 -->
+    <string name="understand_deposit_management">了解押金监管</string>
+    <string name="confirm_sign">确认签约申请</string>
+    <string name="wait_confirm_tenant">待房客确认</string>
+    <string name="look_deposit">查看监管协议</string>
+    <string name="contract_stop">合同终止</string>
+    <string name="contract_invalid">合同无效</string>
+    <string name="look_release">查看解约协议</string>
+    <string name="agreement_force">协议生效</string>
+    <string name="wait_confirm_houseowner">待房主确认</string>
+    <string name="apply_deposit_management">申请押金监管</string>
+    <string name="release">解约</string>
+    <string name="confirm_release">确认解约</string>
+    <string name="tenant_refuse_release">已拒绝</string>
+    <string name="contract_force">合同生效</string>
+    <string name="confirm_deposit_management">确认押金监管</string>
+    <string name="houseowner_refuse_release">已拒绝</string>
+    <!-- 解约历史记录 -->
+    <string name="historyrecord_titlebar_text">解约历史记录</string>
+    <string name="historyrecord_errorcode_one">用户信息不存在</string>
+    <string name="historyrecord_errorcode_two">解约协议信息不存在</string>
+    <!-- 押金分配历史记录 -->
+    <string name="depositallocationhistory_titlebar_text">押金分配历史记录</string>
+    <string name="depositallocationhistory_errorcode_one">用户信息不存在 </string>
+    <string name="depositallocationhistory_errorcode_two">押金分配协议信息不存在 </string>
+    <string name="next_step">下一步</string>
+    <string name="example">例子</string>
+    <string name="example_info">例子提示信息</string>
+    <string name="content_description"></string>
+    <string name="please_select_hint">请选择</string>
+    <string name="please_input_hint">请输入</string>
+    <string name="star">*</string>
+    <string name="unit">单位</string>
+    <string name="apply_sign">申请签约</string>
+    <!-- 联通 -->
+    <string name="list_item_totalprice">件，总金额</string>
+    <string name="confirmpayment">确认支付</string>
+    <string name="unicom_broadband_product">宽带产品</string>
+    <string name="unicom_fusion_business">融合业务</string>
+    <string name="unicom_clickupload">点击上传</string>
+    <string name="unicom_changephotono">换一个</string>
+    <string name="unicom_order">订单</string>
+    <string name="unicom_order_null">暂无联通产品订单</string>
+    <string name="telNo">0411-82580693</string>
+    <string name="go_pay">去支付</string>
+    
+    
+    <!-- 租金分期对话框提示内容 -->
+    <string name="rent_stages_dialog_content">您已经选中使用\"租金分期\"服务，服务支持租赁期限为一年，您将一次性使用中国建设银行信用卡支付1年的租金，请确保您已经申请建行信用卡，并申请足够的额度。交易成功后您需分12期按月向中国建设银行还款，本服务不需支付额外利息。</string>
 </resources>

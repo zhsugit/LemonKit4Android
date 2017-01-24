@@ -16,6 +16,9 @@ import net.lemonsoft.lemonkit.core.graphics.CGPoint;
 import net.lemonsoft.lemonkit.core.graphics.CGSize;
 import net.lemonsoft.lemonkit.native_ui.extend.delegate.LKScrollViewDelegate;
 
+import static net.lemonsoft.lemonkit.native_ui.extend.view.LKTableView.touchFlage;
+
+
 /**
  * LemonKit - 自定义高级ScrollView
  * 支持多向滑动，边缘拉抻回弹
@@ -23,7 +26,8 @@ import net.lemonsoft.lemonkit.native_ui.extend.delegate.LKScrollViewDelegate;
  */
 
 public class LKScrollView extends FrameLayout {
-
+    //纵向是否可滑动标识
+    public static boolean touchFlage = false;
     /**
      * 如果某一轴的的尺寸为0，那么该方向轴无法回弹
      * 如，width为0，那么x轴的最左侧和最右侧两侧无拉动回弹效果
@@ -77,77 +81,20 @@ public class LKScrollView extends FrameLayout {
     }
 
     @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        super.onTouchEvent(event);
+        if (touchFlage)
+            touchMethod(event);
+        return true;
+    }
+
+    @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN: {
-                isTouching = true;
-                if (delegate != null)// 调用开始滑动的代理函数
-                    delegate.scrollViewWillBeginDragging(this);
-                if (scrollRunnable != null) {
-                    scrollRunnable.endScroll();
-                    scrollRunnable = null;
-                }
-                tracker = VelocityTracker.obtain();
-                if (tracker != null)
-                    tracker.addMovement(event);
-                initTouchStartX(event);
-                initTouchStartY(event);
-                break;
-            }
-
-            case MotionEvent.ACTION_POINTER_DOWN: {
-                System.out.println("点击了一根手指");
-                break;
-            }
-            case MotionEvent.ACTION_MOVE: {
-                if (tracker != null)
-                    tracker.addMovement(event);
-                float currentX = startX + event.getX() - moveX;
-                if (currentX < 0 && currentX > -getMaxX())// 在中间横轴显示区域滑动
-                    setBasicX(currentX);
-                else if (getXCanBounces())// 水平边缘，如果有回弹效果
-                    setDampedX(currentX);
-                else initTouchStartX(event);// 防止横向无回弹时候仍然拉动的话再次回拉时候距离延迟
-                float currentY = startY + event.getY() - moveY;
-                if (currentY < 0 && currentY > -getMaxY())// 在中间纵轴显示区域滑动
-                    setBasicY(currentY);
-                else if (getYCanBounces())// 垂直边缘，如果有回弹效果
-                    setDampedY(currentY);
-                else initTouchStartY(event);// 防止纵向无回弹时候仍然拉动的话再次回拉时候距离延迟
-//                System.out.println("current y :" + currentY);
-                break;
-            }
-            case MotionEvent.ACTION_UP: {
-                if (tracker != null) {
-                    //将当前事件添加到速度检测器中
-                    tracker.addMovement(event);
-                    //计算当前的速度
-                    tracker.computeCurrentVelocity(1000);
-                    //得到当前x方向速度
-                    final float vX = tracker.getXVelocity();
-                    //得到当前y方向的速度
-                    final float vY = tracker.getYVelocity();
-                    scrollRunnable = new ScrollRunnable(getContext());
-                    scrollRunnable.startScroll((int) vX, (int) vY);
-                    // 执行惯性滑动runnable
-                    post(scrollRunnable);
-                    // 自动处理溢出边界
-                    autoDealOutOfBounds();
-                }
-                isTouching = false;
-                break;
-            }
-            case MotionEvent.ACTION_CANCEL:
-                //置空速度检测器
-                if (tracker != null) {
-                    tracker.recycle();
-                    tracker = null;
-                }
-                break;
-        }
-
+        if (!touchFlage)
+            touchMethod(event);
         return super.dispatchTouchEvent(event);
     }
+
 
     /**
      * 获取实际应该滚动范围的宽
@@ -430,7 +377,80 @@ public class LKScrollView extends FrameLayout {
         public void endScroll() {
             mScroller.forceFinished(true);
         }
-
     }
 
+    /**
+     * 触摸时方法
+     *
+     * @param event
+     */
+    public void touchMethod(MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN: {
+                isTouching = true;
+                if (delegate != null)// 调用开始滑动的代理函数
+                    delegate.scrollViewWillBeginDragging(this);
+                if (scrollRunnable != null) {
+                    scrollRunnable.endScroll();
+                    scrollRunnable = null;
+                }
+                tracker = VelocityTracker.obtain();
+                if (tracker != null)
+                    tracker.addMovement(event);
+                initTouchStartX(event);
+                initTouchStartY(event);
+                break;
+            }
+
+            case MotionEvent.ACTION_POINTER_DOWN: {
+                System.out.println("点击了一根手指");
+                break;
+            }
+            case MotionEvent.ACTION_MOVE: {
+                if (tracker != null)
+                    tracker.addMovement(event);
+                float currentX = startX + event.getX() - moveX;
+                if (currentX < 0 && currentX > -getMaxX())// 在中间横轴显示区域滑动
+                    setBasicX(currentX);
+                else if (getXCanBounces())// 水平边缘，如果有回弹效果
+                    setDampedX(currentX);
+                else initTouchStartX(event);// 防止横向无回弹时候仍然拉动的话再次回拉时候距离延迟
+                float currentY = startY + event.getY() - moveY;
+                if (currentY < 0 && currentY > -getMaxY())// 在中间纵轴显示区域滑动
+                    setBasicY(currentY);
+                else if (getYCanBounces())// 垂直边缘，如果有回弹效果
+                    setDampedY(currentY);
+                else initTouchStartY(event);// 防止纵向无回弹时候仍然拉动的话再次回拉时候距离延迟
+//                System.out.println("current y :" + currentY);
+                break;
+            }
+            case MotionEvent.ACTION_UP: {
+                if (tracker != null) {
+                    //将当前事件添加到速度检测器中
+                    tracker.addMovement(event);
+                    //计算当前的速度
+                    tracker.computeCurrentVelocity(1000);
+                    //得到当前x方向速度
+                    final float vX = tracker.getXVelocity();
+                    //得到当前y方向的速度
+                    final float vY = tracker.getYVelocity();
+                    scrollRunnable = new ScrollRunnable(getContext());
+                    scrollRunnable.startScroll((int) vX, (int) vY);
+                    // 执行惯性滑动runnable
+                    post(scrollRunnable);
+                    // 自动处理溢出边界
+                    autoDealOutOfBounds();
+                }
+                isTouching = false;
+                break;
+            }
+            case MotionEvent.ACTION_CANCEL:
+                //置空速度检测器
+                if (tracker != null) {
+                    tracker.recycle();
+                    tracker = null;
+                }
+                break;
+        }
+    }
 }

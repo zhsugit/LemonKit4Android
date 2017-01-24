@@ -1,20 +1,20 @@
-package net.lemonsoft.lemonkit.ui_kit.delegate.LKUITableView;
+package net.lemonsoft.lemonkit.native_ui.extend.delegate;
 
 import android.view.View;
 
 import net.lemonsoft.lemonkit.native_ui.extend.view.LKTableView;
-import net.lemonsoft.lemonkit.native_ui.extend.view.LKUITableViewCell;
+import net.lemonsoft.lemonkit.native_ui.extend.view.LKTableViewCell;
 import net.lemonsoft.lemonkit.native_ui.model.LKIndexPath;
 
 
 /**
  * 数据源接口
  */
-public interface LKUITableViewDataSource {
+public interface LKTableViewDataSource {
     // required
     Integer numberOfRowsInSection(LKTableView tableView, Integer section);
 
-    LKUITableViewCell cellForRowAtIndexPath(LKTableView tableView, LKIndexPath indexPath);
+    LKTableViewCell cellForRowAtIndexPath(LKTableView tableView, LKIndexPath indexPath);
 
     // optional
     Integer numberOfSectionsInTableView(LKTableView tableView);
